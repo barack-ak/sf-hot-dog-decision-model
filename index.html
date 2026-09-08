@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>SF Premium Hot Dog Pop-Up Decision Model</title>
+<style>
+:root{--bg:#0E1621;--panel:#141F2D;--panel2:#192739;--cream:#F4EFE6;--muted:#8CA0B6;--dim:#5C7086;--grid:#263952;--amber:#F0A500;--teal:#3FB8AF;--red:#E2574C;--green:#5BAA5B;--purple:#9B7EBD;--radius:12px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--cream);font-family:Arial,Helvetica,sans-serif;font-size:17px;line-height:1.45}button,input{font:inherit}
+header{padding:28px 8% 22px;border-bottom:1px solid var(--grid);display:flex;justify-content:space-between;gap:32px;align-items:flex-end}.eyebrow{font-size:12px;font-weight:800;letter-spacing:.16em;color:var(--amber)}h1{font-family:Georgia,serif;font-size:clamp(30px,4vw,54px);line-height:1.02;margin:8px 0 5px;max-width:950px}header p{margin:0;color:var(--muted)}.status{text-align:right;min-width:210px}.status b{display:block;color:var(--red);font-size:18px}.status span{font-size:13px;color:var(--muted)}
+.pagebar{padding:10px 8%;background:var(--teal);color:#081216;font-weight:800;font-size:13px;letter-spacing:.1em}.wrap{padding:34px 8% 70px}.decision{border:1px solid #6a352f;background:#1d1c23;padding:22px 26px;margin-bottom:28px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center}.decision h2{font-family:Georgia,serif;font-size:28px;margin:0 0 6px}.decision p{margin:0;color:var(--muted)}.pill{padding:9px 13px;border:1px solid var(--red);color:#ffb3ab;font-weight:800;font-size:12px;letter-spacing:.09em;white-space:nowrap}
+.previewwarning{padding:11px 8%;background:#332812;color:#ffd77c;font-size:13px}.previewwarning strong{color:#fff0c9}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0 0 30px}.kpi{border-top:3px solid var(--grid);padding:16px 2px}.kpi.hero{border-color:var(--amber)}.kpi .label{color:var(--muted);font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.kpi .num{font-size:clamp(24px,3vw,38px);font-weight:800;margin:5px 0}.kpi .note{font-size:13px;color:var(--dim)}
+section{margin-top:42px}.sectionhead{display:flex;justify-content:space-between;gap:24px;align-items:end;border-bottom:1px solid var(--grid);padding-bottom:10px;margin-bottom:20px}.sectionhead h2{font-family:Georgia,serif;font-size:27px;margin:0}.sectionhead p{color:var(--muted);font-size:14px;margin:0;max-width:560px;text-align:right}.modelgrid{display:grid;grid-template-columns:minmax(300px,.8fr) minmax(420px,1.2fr);gap:18px}.panel{background:var(--panel);border:1px solid var(--grid);padding:20px}.controls{display:grid;gap:14px}.control{display:grid;grid-template-columns:1fr 75px;gap:8px;align-items:center}.control label{font-size:14px;color:var(--cream)}.control output{font-family:monospace;text-align:right;color:var(--amber);font-weight:700}.control input{grid-column:1/3;width:100%;accent-color:var(--amber)}.resultgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:16px}.result{background:var(--panel2);padding:14px}.result .label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.result .value{font-size:27px;font-weight:800;margin-top:4px}.positive{color:var(--green)!important}.negative{color:var(--red)!important}.neutral{color:var(--amber)!important}
+svg{width:100%;height:auto;display:block}.source{margin:10px 0 0;color:var(--dim);font-size:12px}.source a{color:var(--muted)}.formula{background:#101925;border:1px solid var(--grid);padding:12px 14px;margin-top:14px;font-family:monospace;font-size:13px;color:#c9d5e3}.formula b{color:var(--amber)}
+.channels{display:grid;gap:10px}.channel{display:grid;grid-template-columns:240px 1fr 90px 110px;gap:16px;align-items:center;padding:13px 15px;background:var(--panel);border:1px solid var(--grid)}.channel .name{font-weight:700}.bartrack{height:12px;background:#0c131d;position:relative}.bar{height:100%;position:absolute;left:50%}.bar.neg{background:var(--red);transform:translateX(-100%)}.bar.pos{background:var(--green)}.zero{height:18px;width:1px;background:var(--cream);position:absolute;left:50%;top:-3px}.money{text-align:right;font-family:monospace}.prob{text-align:right;color:var(--muted);font-size:14px}.legend{display:flex;gap:20px;color:var(--muted);font-size:13px;margin:8px 0}.dot{width:9px;height:9px;display:inline-block;margin-right:6px}.dot.red{background:var(--red)}.dot.green{background:var(--green)}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:18px}.scale{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.scale div{background:var(--panel2);padding:15px}.scale b{font-size:23px;display:block}.scale span{font-size:12px;color:var(--muted)}
+.gates{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.gate{padding:15px;background:var(--panel);border-top:3px solid var(--teal)}.gate strong{display:block;margin-bottom:6px}.gate .days{font-size:12px;color:var(--muted)}.gate .spend{color:var(--amber);font-size:22px;font-weight:800}.gate p{font-size:13px;color:var(--muted);margin:7px 0 0}.gate.locked{border-color:var(--red)}
+table{width:100%;border-collapse:collapse;font-size:15px}th,td{padding:11px 12px;border-bottom:1px solid var(--grid);text-align:left;vertical-align:top}th{color:var(--muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase}td.num{text-align:right;font-family:monospace}.tag{font-size:11px;padding:4px 7px;border:1px solid var(--grid);white-space:nowrap}.tag.v{color:var(--green)}.tag.a{color:var(--purple)}
+footer{padding:25px 8%;border-top:1px solid var(--grid);color:var(--dim);font-size:12px}.footergrid{display:grid;grid-template-columns:1fr 1fr;gap:25px}.footergrid a{color:var(--muted);word-break:break-all}
+@media(max-width:900px){header{align-items:flex-start}.status{display:none}.kpis{grid-template-columns:1fr 1fr}.modelgrid,.twocol{grid-template-columns:1fr}.gates{grid-template-columns:1fr 1fr}.channel{grid-template-columns:1fr 90px 100px}.channel .bartrack{grid-column:1/4}.sectionhead{display:block}.sectionhead p{text-align:left;margin-top:6px}.decision{grid-template-columns:1fr}}
+@media(max-width:560px){body{font-size:16px}header,.wrap,footer{padding-left:6%;padding-right:6%}.pagebar{padding-left:6%}.kpis{grid-template-columns:1fr 1fr}.resultgrid{grid-template-columns:1fr 1fr}.gates{grid-template-columns:1fr}.channel{grid-template-columns:1fr 80px}.channel .bartrack{grid-column:1/3}.channel .prob{display:none}.scale{grid-template-columns:1fr}.decision h2{font-size:23px}.formula{overflow-wrap:anywhere}.source a{overflow-wrap:anywhere}table,tbody,tr,td{display:block;width:100%}thead{display:none}tr{margin-bottom:12px;background:var(--panel);border:1px solid var(--grid);padding:8px}td{border:0;padding:7px 8px 7px 42%;position:relative;min-height:34px}td:before{position:absolute;left:8px;top:7px;width:38%;color:var(--muted);font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}td:nth-child(1):before{content:'Constraint'}td:nth-child(2):before{content:'Verified fact'}td:nth-child(3):before{content:'Decision effect'}td:nth-child(4):before{content:'Status'}}
+@media print{body{background:#fff;color:#111}.panel,.channel,.gate,.scale div,.result{background:#f5f7fa;color:#111}.source,.kpi .note,.kpi .label,.sectionhead p,.gate p,.gate .days{color:#555}header,.wrap,footer{padding-left:4%;padding-right:4%}}
+</style>
+</head>
+<body>
+<header><div><div class="eyebrow">PRELIMINARY DECISION MODEL</div><h1>SF premium hot dog pop-up</h1><p>Adjust the assumptions. See whether the day works, then ask whether the theme works.</p></div><div class="status"><b>PILOT BEFORE SCALE</b><span>field evidence required</span></div></header>
+<div class="pagebar">LIVE MODEL • PRE-FIELDWORK • 8 SEPTEMBER 2026</div>
+<div class="previewwarning"><strong>If sliders do not move:</strong> Telegram's attachment preview is suppressing the calculator. Download this file and open it in Safari or Chrome, or use the Excel workbook's yellow cells.</div>
+<main class="wrap">
+<div class="decision"><div><h2>Best current move: pre-sold test only</h2><p>Use an operator-led pilot. Validate demand before equipment purchases. No fryer in the first 90 days.</p></div><div class="pill">PRE-FIELDWORK</div></div>
+<div class="kpis">
+ <div class="kpi hero"><div class="label">Base break-even</div><div class="num" id="kpiBE">100 tx</div><div class="note">transactions per event</div></div>
+ <div class="kpi"><div class="label">Base event contribution</div><div class="num" id="kpiProfit">$5</div><div class="note">after all operating labor</div></div>
+ <div class="kpi"><div class="label">Pre-sold P(profit)</div><div class="num">91%</div><div class="note">conditional on booking, estimated</div></div>
+ <div class="kpi"><div class="label">90-day capital cap</div><div class="num">$5,750</div><div class="note">released by evidence, not at once</div></div>
+</div>
+
+<section>
+<div class="sectionhead"><h2>Adjustable event model</h2><p>Yellow values are inputs. Every output updates immediately. Prices are pre-tax because sales tax collected is not revenue.</p></div>
+<div class="modelgrid">
+ <div class="panel controls">
+  <div class="control"><label for="tx">Transactions</label><output id="txO"></output><input id="tx" type="range" min="20" max="180" step="5" value="100"></div>
+  <div class="control"><label for="aov">Pre-tax average ticket</label><output id="aovO"></output><input id="aov" type="range" min="10" max="30" step="0.25" value="15.25"></div>
+  <div class="control"><label for="food">Food + packaging as % of sales</label><output id="foodO"></output><input id="food" type="range" min="20" max="45" step="1" value="31"></div>
+  <div class="control"><label for="hours">Total labor-hours</label><output id="hoursO"></output><input id="hours" type="range" min="10" max="35" step="1" value="20"></div>
+  <div class="control"><label for="wage">Loaded labor rate</label><output id="wageO"></output><input id="wage" type="range" min="20" max="50" step="1" value="28"></div>
+  <div class="control"><label for="kh">Commissary hours</label><output id="khO"></output><input id="kh" type="range" min="0" max="10" step="0.5" value="4.5"></div>
+  <div class="control"><label for="kr">Commissary rate</label><output id="krO"></output><input id="kr" type="range" min="20" max="70" step="1" value="35"></div>
+  <div class="control"><label for="fee">Organizer fixed fee</label><output id="feeO"></output><input id="fee" type="range" min="0" max="1000" step="25" value="125"></div>
+  <div class="control"><label for="share">Organizer share of sales</label><output id="shareO"></output><input id="share" type="range" min="0" max="20" step="1" value="0"></div>
+  <div class="control"><label for="other">Transport + daily reserve</label><output id="otherO"></output><input id="other" type="range" min="0" max="400" step="10" value="150"></div>
+ </div>
+ <div class="panel">
+  <div class="resultgrid">
+   <div class="result"><div class="label">Pre-tax sales</div><div class="value" id="salesV"></div></div>
+   <div class="result"><div class="label">Event contribution</div><div class="value" id="profitV"></div></div>
+   <div class="result"><div class="label">Break-even volume</div><div class="value" id="beV"></div></div>
+   <div class="result"><div class="label">Contribution / labor-hour</div><div class="value" id="phV"></div></div>
+  </div>
+  <svg id="curve" viewBox="0 0 720 310" role="img" aria-label="Profit curve by transaction volume"></svg>
+  <div class="formula" id="formula"></div>
+  <p class="source">VERIFIED: Square in-person fee 2.6% + $0.15. SF minimum wage $19.61 from July 1, 2026. ESTIMATED: all yellow operating inputs. Sources: <a href="https://squareup.com/us/en/payments/our-fees">Square</a>, <a href="https://www.sf.gov/information--minimum-wage-ordinance">SF.gov</a>.</p>
+ </div>
+</div>
+</section>
+
+<section>
+<div class="sectionhead"><h2>Channel economics</h2><p>The median outcome matters more than prestige. Bars use the 50,000-run model and include labor, kitchen, transport, venue, card, and food costs.</p></div>
+<div class="legend"><span><i class="dot red"></i>median loss</span><span><i class="dot green"></i>median profit</span></div>
+<div class="channels" id="channels"></div>
+<p class="source">ESTIMATED: channel demand distributions and access probabilities. VERIFIED: Foodwise criteria and traffic totals, Sunset Mercantile listed recurring-market fees, OTG creator channels. Sources: <a href="https://foodwise.org/markets/prospective-sellers/">Foodwise access</a>, <a href="https://foodwise.org/support/farmers-market-brand-activations/">Foodwise traffic</a>, <a href="https://sunsetmercantilesf.com/join-prices/">Sunset Mercantile fees</a>, <a href="https://offthegridsf.com/creators/">Off the Grid</a>.</p>
+</section>
+
+<section>
+<div class="sectionhead"><h2>Fries: margin or machinery?</h2><p>Cheap potatoes are not the decision. The decision is whether attached fries pay for the second labor and production system without slowing the core line.</p></div>
+<div class="modelgrid">
+ <div class="panel controls">
+  <div class="control"><label for="fprice">Fries price</label><output id="fpriceO"></output><input id="fprice" type="range" min="3" max="10" step="0.25" value="6"></div>
+  <div class="control"><label for="fattach">Attach rate</label><output id="fattachO"></output><input id="fattach" type="range" min="0" max="100" step="5" value="40"></div>
+  <div class="control"><label for="fcogs">COGS per serving incl. oil, pack, waste</label><output id="fcogsO"></output><input id="fcogs" type="range" min="0.5" max="4" step="0.05" value="1.35"></div>
+  <div class="control"><label for="flabor">Extra labor-hours</label><output id="flaborO"></output><input id="flabor" type="range" min="0" max="12" step="1" value="4"></div>
+  <div class="control"><label for="ffixed">Fryer, cleaning, fire and venue burden</label><output id="ffixedO"></output><input id="ffixed" type="range" min="0" max="800" step="5" value="160"></div>
+  <div class="control"><label for="flost">Core tickets lost to slower throughput</label><output id="flostO"></output><input id="flost" type="range" min="0" max="30" step="1" value="8"></div>
+ </div>
+ <div class="panel">
+  <div class="resultgrid">
+   <div class="result"><div class="label">AOV lift</div><div class="value" id="faovV"></div></div>
+   <div class="result"><div class="label">Fries event profit</div><div class="value" id="fprofitV"></div></div>
+   <div class="result"><div class="label">Break-even attach rate</div><div class="value" id="fbeV"></div></div>
+   <div class="result"><div class="label">Recommendation</div><div class="value" id="fdecisionV"></div></div>
+  </div>
+  <svg id="friesChart" viewBox="0 0 720 280" role="img" aria-label="Fries incremental profit by attach rate"></svg>
+  <div class="formula" id="friesFormula"></div>
+  <p class="source">VERIFIED: SF fryer constraints and bulk potato/oil price ranges. ESTIMATED: attach rate, labor, rental, cleaning, venue burden and lost tickets. The honest test venue is a compliant kitchen with existing fryer infrastructure.</p>
+ </div>
+</div>
+</section>
+
+<section>
+<div class="sectionhead"><h2>Condiment and flavor lab</h2><p>A strong dog needs contrast, not a pile. Operational rule: one sauce, one acidic component, one crunch or fresh finish; no more than three finishing motions.</p></div>
+<table>
+<thead><tr><th>Profile</th><th>Architecture</th><th>Ingredients</th><th>Operational read</th><th>Decision</th></tr></thead>
+<tbody>
+<tr><td><strong>Proper Classic</strong></td><td>salty + acidic + fresh</td><td>mustard, relish, diced onion</td><td>18 sec; baseline control</td><td><span class="tag v">CONTROL</span></td></tr>
+<tr><td><strong>Miso Mustard Crunch</strong></td><td>umami + acid + dry crunch</td><td>white-miso mustard, rice-vinegar cabbage, nori-sesame crunch</td><td>24 sec; three finishing motions; soy, sesame, mustard</td><td><span class="tag v">LEAD ASIAN TEST</span></td></tr>
+<tr><td><strong>Manila BBQ</strong></td><td>sweet-tangy + pickle + garlic</td><td>banana-ketchup glaze, atchara, fried garlic</td><td>25 sec; three motions; lower observed local overlap</td><td><span class="tag">SECOND TEST</span></td></tr>
+<tr><td><strong>Seoul Heat</strong></td><td>fermented + creamy + spicy</td><td>kimchi relish, Kewpie, spicy ketchup, fried garlic, scallion</td><td>34 sec; five motions; egg, soy/wheat vary</td><td><span class="tag a">TOO CLOSE TO HAYZ</span></td></tr>
+<tr><td><strong>Tokyo Terimayo</strong></td><td>sweet-savory + creamy + seaweed</td><td>teriyaki, Kewpie, grilled onion, nori</td><td>29 sec; familiar JAPADOG architecture</td><td><span class="tag a">REFERENCE ONLY</span></td></tr>
+<tr><td><strong>Banh Mi</strong></td><td>acid + herb + chile + creamy</td><td>lime aioli, carrot-daikon pickle, cilantro, jalapeno</td><td>30 sec; direct local analogue at Hayz</td><td><span class="tag a">DO NOT LEAD</span></td></tr>
+</tbody>
+</table>
+<div class="formula"><b>Recommended three-dog test menu</b><br>1. Proper Classic - control<br>2. Miso Mustard Crunch - lead Asian profile<br>3. Manila BBQ - divergent Asian profile<br><br>Do not offer a build-your-own condiment bar. It expands inventory, slows ordering, weakens signature identity, and makes allergen control harder.</div>
+<p class="source">JAPADOG's official menu establishes terimayo, yakisoba, oroshi, okonomi and related Japanese hot-dog archetypes. Hayz Dog's official SF menu already offers both kimchi/Kewpie and banh-mi profiles. Kewpie identifies egg yolk, oil and vinegar as core ingredients; exact US SKU labels govern allergen disclosure. Kikkoman's chart shows soy, wheat and sesame vary by sauce SKU. Sources: <a href="https://japadog.com/menu">JAPADOG</a>, <a href="https://www.hayzdogsf.com/menu">Hayz Dog</a>, <a href="https://www.kewpie.com/en/products/mayonnaise/">Kewpie</a>, <a href="https://kikkomanusa.com/allergen-chart/">Kikkoman allergens</a>.</p>
+</section>
+
+<section>
+<div class="sectionhead"><h2>The theme-scale gap</h2><p>A profitable event is not automatically a portfolio-worthy business. Change the event profit and weekly event count to see the annual run-rate.</p></div>
+<div class="twocol">
+ <div class="panel controls">
+  <div class="control"><label for="ep">Contribution per event</label><output id="epO"></output><input id="ep" type="range" min="0" max="2500" step="50" value="500"></div>
+  <div class="control"><label for="ew">Events per week</label><output id="ewO"></output><input id="ew" type="range" min="1" max="150" step="1" value="2"></div>
+  <div class="result"><div class="label">Annual contribution run-rate</div><div class="value" id="annualV"></div></div>
+  <div class="formula" id="scaleFormula"></div>
+ </div>
+ <div class="panel">
+  <div class="scale"><div><b id="events2m"></b><span>events/week required for $2M annual contribution</span></div><div><b id="events4m"></b><span>events/week required for $4M annual contribution</span></div><div><b id="gapPct"></b><span>short of $2M target at selected pace</span></div></div>
+  <svg id="scaleChart" viewBox="0 0 720 220" role="img" aria-label="Annual contribution versus target"></svg>
+  <p class="source">REFERENCE SCALE: compare selected event economics with $2M to $4M annual contribution. This is a scale test, not a forecast.</p>
+ </div>
+</div>
+</section>
+
+<section>
+<div class="sectionhead"><h2>90-day release gates</h2><p>Capital moves one gate at a time. The clock begins only after a named operator and written pilot authorization.</p></div>
+<div class="gates">
+ <div class="gate locked"><strong>0. Authorization + operator</strong><div class="days">Days 0 to 7</div><div class="spend">$0</div><p>Authorize the pilot and name an accountable operator.</p></div>
+ <div class="gate"><strong>1. Bench prototype</strong><div class="days">Days 8 to 21</div><div class="spend">$750</div><p>30 to 50 blind tastings. Cost recipes by gram.</p></div>
+ <div class="gate"><strong>2. Timed dry run</strong><div class="days">Days 22 to 35</div><div class="spend">$1,000</div><p>30 transactions/hour. Measure every labor-hour.</p></div>
+ <div class="gate"><strong>3. Paid event</strong><div class="days">Days 36 to 55</div><div class="spend">$1,500</div><p>Pre-sold count or $2,000 minimum guarantee.</p></div>
+ <div class="gate"><strong>4. Repeatability</strong><div class="days">Days 56 to 90</div><div class="spend">$2,500</div><p>Three events total. Two profitable. Two repeat channels.</p></div>
+</div>
+</section>
+
+<section>
+<div class="sectionhead"><h2>Verified constraints</h2><p>These are the facts that shape the design before customer demand is known.</p></div>
+<table>
+<thead><tr><th>Constraint</th><th>Verified fact</th><th>Decision effect</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>Annual TFF</td><td>$412 application; valid through March 31 and prorated</td><td>Use annual path only if multiple SF events are likely</td><td><span class="tag v">VERIFIED</span></td></tr>
+<tr><td>One-time high-hazard TFF</td><td>$134 for up to two days</td><td>Cheaper first regulatory path if organizer confirms fit</td><td><span class="tag v">VERIFIED</span></td></tr>
+<tr><td>Lead time</td><td>Sponsor packet and vendor paperwork at least 2 weeks before public event</td><td>No same-week public test</td><td><span class="tag v">VERIFIED</span></td></tr>
+<tr><td>Fryer</td><td>200 sq ft plus separation or Type I hood and suppression; Class K extinguisher</td><td>No fryer in MVP</td><td><span class="tag v">VERIFIED</span></td></tr>
+<tr><td>Food safety</td><td>At least one food safety manager; handler cards for most staff; hot hold at 135°F or above</td><td>Credential and equipment dependency</td><td><span class="tag v">VERIFIED</span></td></tr>
+<tr><td>Labor</td><td>SF minimum wage $19.61/hour</td><td>$28 loaded model rate is a planning estimate, not legal minimum</td><td><span class="tag v">VERIFIED</span></td></tr>
+<tr><td>Equipment</td><td>No-fryer operator kit estimated $2,046 to $8,830</td><td>Rent or borrow until product and channel work</td><td><span class="tag a">ESTIMATED</span></td></tr>
+</tbody>
+</table>
+<p class="source">Primary sources: <a href="https://www.sf.gov/organize-food-vendors-for-a-special-event">SF event food vendors</a>, <a href="https://media.api.sf.gov/documents/FY27_Website_Fees.pdf">SFDPH fee schedule</a>, <a href="https://www.sf.gov/apply-for-a-fire-permit-special-event">SFFD special-event permit</a>, <a href="https://www.sf.gov/information--food-handling-rules-special-events">food handling rules</a>.</p>
+</section>
+</main>
+<footer><div class="footergrid"><div><strong>Evidence rule</strong><br>Verified values come from first-party government, organizer, or merchant sources. Estimated values are purple or explicitly labeled. This model is decision support, not proof of demand.</div><div><strong>Artifact package</strong><br>Interactive dashboard + editable Excel model + full decision report. The exact supplier costs, venue conversion, insurance, and operator cost remain open.</div></div></footer>
+<script>
+const money=v=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(v);
+const money2=v=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',minimumFractionDigits:2,maximumFractionDigits:2}).format(v);
+const one=v=>Number(v).toFixed(1);
+const ids=['tx','aov','food','hours','wage','kh','kr','fee','share','other'];
+const val=id=>Number(document.getElementById(id).value);
+function cls(el,v){el.classList.remove('positive','negative','neutral');el.classList.add(v>0?'positive':v<0?'negative':'neutral')}
+function update(){
+ const tx=val('tx'),aov=val('aov'),food=val('food')/100,hours=val('hours'),wage=val('wage'),kh=val('kh'),kr=val('kr'),fee=val('fee'),share=val('share')/100,other=val('other');
+ const sales=tx*aov, card=sales*.026+tx*.15, variable=sales*(food+share)+card, fixed=hours*wage+kh*kr+fee+other, profit=sales-variable-fixed, unit=aov*(1-food-share-.026)-.15, be=fixed/unit, ph=profit/hours;
+ txO.value=tx; aovO.value=money2(aov); foodO.value=(food*100).toFixed(0)+'%'; hoursO.value=hours+' h'; wageO.value=money(wage)+'/h'; khO.value=kh+' h'; krO.value=money(kr)+'/h'; feeO.value=money(fee); shareO.value=(share*100).toFixed(0)+'%'; otherO.value=money(other);
+ salesV.textContent=money(sales);profitV.textContent=money(profit);beV.textContent=isFinite(be)?one(be)+' tx':'never';phV.textContent=money(ph)+'/h';kpiBE.textContent=isFinite(be)?Math.ceil(be)+' tx':'never';kpiProfit.textContent=money(profit);cls(profitV,profit);cls(phV,ph);cls(kpiProfit,profit);
+ formula.innerHTML='<b>Worked formula</b><br>Sales = '+tx+' × '+money2(aov)+' = '+money(sales)+'<br>Unit contribution = '+money2(aov)+' × (1 − '+(food*100).toFixed(0)+'% food − '+(share*100).toFixed(0)+'% venue − 2.6% card) − $0.15 = '+money2(unit)+'<br>Fixed operating cost = labor '+money(hours*wage)+' + kitchen '+money(kh*kr)+' + venue '+money(fee)+' + other '+money(other)+' = '+money(fixed)+'<br>Break-even = '+money(fixed)+' ÷ '+money2(unit)+' = '+one(be)+' transactions';
+ drawCurve(unit,fixed,tx);
+}
+function drawCurve(unit,fixed,current){
+ const svg=document.getElementById('curve'),W=720,H=310,L=62,R=20,T=28,B=45,maxX=180;let vals=[];for(let x=0;x<=maxX;x+=10)vals.push([x,x*unit-fixed]);let minY=Math.min(-500,...vals.map(x=>x[1])),maxY=Math.max(600,...vals.map(x=>x[1]));const sx=x=>L+x/maxX*(W-L-R),sy=y=>T+(maxY-y)/(maxY-minY)*(H-T-B);let s='<text x="0" y="14" fill="#8CA0B6" font-size="12" font-weight="700">EVENT CONTRIBUTION BY TRANSACTION VOLUME</text>';
+ for(let i=0;i<5;i++){let y=minY+i*(maxY-minY)/4;s+='<line x1="'+L+'" y1="'+sy(y)+'" x2="'+(W-R)+'" y2="'+sy(y)+'" stroke="#263952"/><text x="'+(L-8)+'" y="'+(sy(y)+4)+'" text-anchor="end" fill="#5C7086" font-size="11">'+money(y)+'</text>'}
+ s+='<line x1="'+L+'" y1="'+sy(0)+'" x2="'+(W-R)+'" y2="'+sy(0)+'" stroke="#F4EFE6" stroke-width="1"/>';
+ const pts=vals.map(v=>sx(v[0])+','+sy(v[1])).join(' ');s+='<polyline points="'+pts+'" fill="none" stroke="#3FB8AF" stroke-width="4"/>';
+ for(let x=0;x<=180;x+=30)s+='<text x="'+sx(x)+'" y="'+(H-15)+'" text-anchor="middle" fill="#5C7086" font-size="11">'+x+'</text>';
+ let cy=current*unit-fixed;s+='<circle cx="'+sx(current)+'" cy="'+sy(cy)+'" r="7" fill="#F0A500"/><text x="'+Math.min(W-85,sx(current)+10)+'" y="'+(sy(cy)-10)+'" fill="#F0A500" font-size="12" font-weight="700">'+current+' tx: '+money(cy)+'</text>';svg.innerHTML=s;
+}
+const channelData=[['Pre-sold private/corporate',278,.91],['Outer Sunset Farmers Market',-216,.16],['Off the Grid public market',-232,.14],['Mission Community Market',-343,.03],['Ferry Plaza Tuesday',-250,.13],['Alemany Saturday',-548,0.00002]];
+function drawChannels(){const max=600;channels.innerHTML=channelData.map(d=>{let width=Math.min(50,Math.abs(d[1])/max*50);return '<div class="channel"><div class="name">'+d[0]+'</div><div class="bartrack"><div class="zero"></div><div class="bar '+(d[1]>=0?'pos':'neg')+'" style="width:'+width+'%"></div></div><div class="money '+(d[1]>=0?'positive':'negative')+'">'+money(d[1])+'</div><div class="prob">P(profit) '+(d[2]*100<1?'&lt;1':Math.round(d[2]*100))+'%</div></div>'}).join('')}
+const fids=['fprice','fattach','fcogs','flabor','ffixed','flost'];
+function friesCalc(attach){const tx=val('tx'),price=val('fprice'),cogs=val('fcogs'),labor=val('flabor')*val('wage'),fixed=val('ffixed'),lost=val('flost'),unit=price-cogs-price*.026,core=val('aov')*(1-val('food')/100-val('share')/100-.026)-.15;return {tx,price,cogs,labor,fixed,lost,unit,core,profit:tx*attach*unit-labor-fixed-lost*core,be:(labor+fixed+lost*core)/(tx*unit)}}
+function updateFries(){const attach=val('fattach')/100,r=friesCalc(attach);fpriceO.value=money2(r.price);fattachO.value=Math.round(attach*100)+'%';fcogsO.value=money2(r.cogs);flaborO.value=val('flabor')+' h';ffixedO.value=money(r.fixed);flostO.value=r.lost+' tx';faovV.textContent=money2(r.price*attach);fprofitV.textContent=money(r.profit);fbeV.textContent=(r.be*100).toFixed(0)+'%';fdecisionV.textContent=r.profit<0?'NO AT THIS LOAD':r.be>.6?'TOO FRAGILE':'CONTROLLED TEST';fdecisionV.style.fontSize='18px';cls(fprofitV,r.profit);cls(fdecisionV,r.profit);friesFormula.innerHTML='<b>Worked formula</b><br>Contribution per fries = '+money2(r.price)+' − '+money2(r.cogs)+' COGS − 2.6% card = '+money2(r.unit)+'<br>Gross fries contribution = '+r.tx+' tickets × '+Math.round(attach*100)+'% attach × '+money2(r.unit)+' = '+money(r.tx*attach*r.unit)+'<br>Added burden = '+money(r.labor)+' labor + '+money(r.fixed)+' fixed + '+r.lost+' lost core tickets × '+money2(r.core)+' = '+money(r.labor+r.fixed+r.lost*r.core)+'<br>Fully loaded fries result = '+money(r.profit);drawFries(r)}
+function drawFries(r){const svg=friesChart,W=720,H=280,L=62,R=25,T=25,B=40;let vals=[];for(let a=0;a<=1.001;a+=.1)vals.push([a,friesCalc(a).profit]);let minY=Math.min(-400,...vals.map(v=>v[1])),maxY=Math.max(250,...vals.map(v=>v[1]));const sx=x=>L+x*(W-L-R),sy=y=>T+(maxY-y)/(maxY-minY)*(H-T-B);let s='<text x="0" y="14" fill="#8CA0B6" font-size="12" font-weight="700">INCREMENTAL FRIES PROFIT BY ATTACH RATE</text>';for(let i=0;i<5;i++){let y=minY+i*(maxY-minY)/4;s+='<line x1="'+L+'" y1="'+sy(y)+'" x2="'+(W-R)+'" y2="'+sy(y)+'" stroke="#263952"/><text x="'+(L-8)+'" y="'+(sy(y)+4)+'" text-anchor="end" fill="#5C7086" font-size="11">'+money(y)+'</text>'}s+='<line x1="'+L+'" y1="'+sy(0)+'" x2="'+(W-R)+'" y2="'+sy(0)+'" stroke="#F4EFE6"/><polyline points="'+vals.map(v=>sx(v[0])+','+sy(v[1])).join(' ')+'" fill="none" stroke="#F0A500" stroke-width="4"/>';for(let a=0;a<=1;a+=.2)s+='<text x="'+sx(a)+'" y="'+(H-12)+'" text-anchor="middle" fill="#5C7086" font-size="11">'+Math.round(a*100)+'%</text>';svg.innerHTML=s}
+function updateScale(){const ep=val('ep'),ew=val('ew'),annual=ep*ew*52,req2=ep?2000000/ep/52:Infinity,req4=ep?4000000/ep/52:Infinity,gap=Math.max(0,1-annual/2000000);epO.value=money(ep);ewO.value=ew+'/wk';annualV.textContent=money(annual);events2m.textContent=isFinite(req2)?one(req2)+'/wk':'never';events4m.textContent=isFinite(req4)?one(req4)+'/wk':'never';gapPct.textContent=(gap*100).toFixed(0)+'%';scaleFormula.innerHTML='<b>Worked formula</b><br>'+money(ep)+' per event × '+ew+' events/week × 52 weeks = '+money(annual)+' per year';drawScale(annual)}
+function drawScale(annual){const svg=scaleChart,W=720,H=220,L=150,R=30,T=30,B=30,max=4000000;let items=[['Selected run-rate',annual,'#F0A500'],['Portfolio floor',2000000,'#3FB8AF'],['Portfolio high',4000000,'#5BAA5B']];let s='';items.forEach((d,i)=>{let y=T+i*58,w=Math.min(W-L-R,d[1]/max*(W-L-R)),inside=w>125,labelX=inside?L+w-8:L+w+8,anchor=inside?'end':'start';s+='<text x="0" y="'+(y+20)+'" fill="#8CA0B6" font-size="13">'+d[0]+'</text><rect x="'+L+'" y="'+y+'" width="'+w+'" height="28" fill="'+d[2]+'"/><text x="'+labelX+'" y="'+(y+20)+'" text-anchor="'+anchor+'" fill="#F4EFE6" font-size="12">'+money(d[1])+'</text>'});svg.innerHTML=s}
+ids.forEach(id=>document.getElementById(id).addEventListener('input',()=>{update();updateFries()}));fids.forEach(id=>document.getElementById(id).addEventListener('input',updateFries));['ep','ew'].forEach(id=>document.getElementById(id).addEventListener('input',updateScale));drawChannels();update();updateFries();updateScale();
+</script>
+</body>
+</html>
