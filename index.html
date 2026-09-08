@@ -113,6 +113,52 @@ footer{padding:25px 8%;border-top:1px solid var(--grid);color:var(--dim);font-si
 </section>
 
 <section>
+<div class="sectionhead"><h2>SF opportunity calendar and access</h2><p>Availability is not access. Published attendance, vendor count, fees and process are facts. Acceptance percentages are planning ranges because organizers do not publish acceptance rates.</p></div>
+<div class="kpis">
+ <div class="kpi hero"><div class="label">Listed market locations</div><div class="num">17</div><div class="note">SF Environment</div></div>
+ <div class="kpi"><div class="label">Peak weekly sessions</div><div class="num">20</div><div class="note">across published schedules</div></div>
+ <div class="kpi"><div class="label">Annual market-days</div><div class="num">~911</div><div class="note">conservative schedule count</div></div>
+ <div class="kpi"><div class="label">Certified markets</div><div class="num">13</div><div class="note">CDFA roster, July 2026</div></div>
+</div>
+<div class="twocol">
+ <div class="panel controls">
+  <h3>Foot traffic → tickets</h3>
+  <div class="control"><label for="traffic">People in selling window</label><output id="trafficO"></output><input id="traffic" type="range" min="500" max="60000" step="500" value="4000"></div>
+  <div class="control"><label for="eatRate">Buy prepared food</label><output id="eatRateO"></output><input id="eatRate" type="range" min="5" max="60" step="1" value="25"></div>
+  <div class="control"><label for="capture">Your share of food buyers</label><output id="captureO"></output><input id="capture" type="range" min="1" max="30" step="1" value="10"></div>
+  <div class="result"><div class="label">Expected tickets</div><div class="value" id="ticketEstimate"></div></div>
+  <div class="formula" id="trafficFormula"></div>
+ </div>
+ <div class="panel controls">
+  <h3>Applications → one placement</h3>
+  <div class="control"><label for="apps">Qualified applications</label><output id="appsO"></output><input id="apps" type="range" min="1" max="20" step="1" value="5"></div>
+  <div class="control"><label for="aprob">Acceptance per application</label><output id="aprobO"></output><input id="aprob" type="range" min="1" max="50" step="1" value="15"></div>
+  <div class="result"><div class="label">At least one placement</div><div class="value" id="placementP"></div></div>
+  <div class="formula" id="accessFormula"></div>
+  <p class="source">Planning approximation assumes independent applications. Real outcomes are correlated by menu fit, permits, operator experience and organizer relationships.</p>
+ </div>
+</div>
+<table>
+<thead><tr><th>Channel / event</th><th>When</th><th>Traffic evidence</th><th>Published access facts</th><th>Modeled access</th><th>Current read</th></tr></thead>
+<tbody>
+<tr><td><strong>Outer Sunset FM</strong></td><td>Sun 9–2, year-round; 52 days</td><td>Not published</td><td>$25 application; $100 TFF / $125 open flame; tasting required</td><td>15–35%</td><td><span class="tag v">BEST RECURRING TEST</span></td></tr>
+<tr><td><strong>Stonestown / Clement</strong></td><td>Sun, year-round; 104 days combined</td><td>Not published</td><td>AIM reviews within 45 days; $150 annual + $75–$80 onsite stall; tasting</td><td>10–25%</td><td><span class="tag">SECOND WAVE</span></td></tr>
+<tr><td><strong>PCFMA SF markets</strong></td><td>Castro, Divisadero, Fillmore, Inner Sunset; ~195 days</td><td>Not published</td><td>$175 new application; 2 weeks–3 months; every market has a waitlist</td><td>5–15%</td><td><span class="tag a">RELATIONSHIP SALE</span></td></tr>
+<tr><td><strong>Foodwise markets</strong></td><td>Ferry 3×/week; Mission Thu seasonal; Alemany Sat</td><td>Ferry 55,000 shoppers/week; Mission 4,000/week</td><td>Limited space; 2 years prepared-food experience preferred; blind tasting</td><td>1–5%</td><td><span class="tag a">NOT FIRST CHANNEL</span></td></tr>
+<tr><td><strong>Presidio Pop Up</strong></td><td>2+ shifts/week for 6 months</td><td>1.8M visits in opening year; not shift traffic</td><td>Ongoing application; incumbents first; $72.50–$250/shift</td><td>5–15%</td><td><span class="tag a">TOO MUCH COMMITMENT</span></td></tr>
+<tr><td><strong>Carnaval</strong></td><td>May 23–24, 2026</td><td>400,000 attendees; 50 food vendors</td><td>2026 closed May 3</td><td>Closed</td><td><span class="tag a">PLAN 2027 ONLY</span></td></tr>
+<tr><td><strong>Union Street</strong></td><td>Jun 6–7, 2026</td><td>Not published</td><td>SF cooking booth $1,740; two-day commitment</td><td>Closed/past</td><td><span class="tag a">HIGH FEE</span></td></tr>
+<tr><td><strong>North Beach</strong></td><td>Jun 20–21, 2026</td><td>Not published</td><td>SF cooking booth $1,870; two-day commitment</td><td>Closed/past</td><td><span class="tag a">HIGH FEE</span></td></tr>
+<tr><td><strong>Sunday Streets</strong></td><td>Jun 14, Jul 19, Aug 23, Oct 18</td><td>Not published by event</td><td>$45 vending registration; Excelsior deadline Oct 1</td><td>20–40%</td><td><span class="tag v">APPLY / VERIFY FOOD FIT</span></td></tr>
+<tr><td><strong>Haight-Ashbury Fair</strong></td><td>Sep 20, 2026</td><td>“Thousands”</td><td>Food sold out; flame booth $1,600</td><td>Closed</td><td><span class="tag a">TOO LATE / HIGH FEE</span></td></tr>
+<tr><td><strong>Sunset Night Market</strong></td><td>Sep 25, 2026</td><td>Not published</td><td>Cooking booth $500; $425 local; permits included</td><td>10–25%</td><td><span class="tag">LATE-STAGE ASK</span></td></tr>
+<tr><td><strong>Castro Street Fair</strong></td><td>Oct 4, 2026</td><td>Not published</td><td>Food vendors included; registration page says open</td><td>5–15%</td><td><span class="tag">VERIFY BEFORE SPEND</span></td></tr>
+<tr><td><strong>Potrero Hill Festival</strong></td><td>Oct 17, 2026</td><td>Not published</td><td>Application open; food vendor $250 including permit</td><td>25–50%</td><td><span class="tag v">BEST 2026 EVENT LEAD</span></td></tr>
+</tbody></table>
+<p class="source">Sources: <a href="https://www.sfenvironment.org/farmers-markets-in-sf">SF Environment market list</a>, <a href="https://www.cdfa.ca.gov/is/docs/CurrentMrktsCounty.pdf">CDFA July 2026 roster</a>, <a href="https://foodwise.org/support/farmers-market-brand-activations/">Foodwise traffic</a>, <a href="https://foodwise.org/markets/prospective-sellers/">Foodwise criteria</a>, <a href="https://www.pcfma.org/sell">PCFMA process</a>, <a href="https://www.agriculturalinstitute.org/joinourmarkets">AIM process/fees</a>, <a href="https://sunsetmercantilesf.com/join-prices/">Sunset Mercantile fees</a>, <a href="https://presidio.gov/presidio-pop-up-vendor-information">Presidio terms</a>, <a href="https://www.sf.gov/carnaval-san-francisco">Carnaval traffic</a>, <a href="https://potrerofestival.com/become-a-vendor/">Potrero application</a>. Access ranges are subjective planning estimates, confidence 3–5/10; all published facts are objective, confidence 8–10/10.</p>
+</section>
+
+<section>
 <div class="sectionhead"><h2>Fries: margin or machinery?</h2><p>Cheap potatoes are not the decision. The decision is whether attached fries pay for the second labor and production system without slowing the core line.</p></div>
 <div class="modelgrid">
  <div class="panel controls">
@@ -139,6 +185,26 @@ footer{padding:25px 8%;border-top:1px solid var(--grid);color:var(--dim);font-si
 
 <section>
 <div class="sectionhead"><h2>Condiment and flavor lab</h2><p>A strong dog needs contrast, not a pile. Operational rule: one sauce, one acidic component, one crunch or fresh finish; no more than three finishing motions.</p></div>
+<div class="twocol">
+ <div class="panel">
+  <h3>Premium dog service specification</h3>
+  <table><tbody>
+   <tr><td><strong>Frank</strong></td><td>4 oz, natural-casing, smoked all-beef frank. Start with a proven Bay Area producer; commission a custom grind only after repeat demand.</td></tr>
+   <tr><td><strong>Warm</strong></td><td>155–160°F water bath; do not boil. Use plain or lightly seasoned water—the casing limits flavor transfer.</td></tr>
+   <tr><td><strong>Finish</strong></td><td>45–75 seconds on a hot plancha, rolling for blister and color; verify required reheating temperature and serve immediately.</td></tr>
+   <tr><td><strong>Bun</strong></td><td>70–85 g split-top milk/potato roll. Brush inside lightly and toast cut-side down 20–30 seconds.</td></tr>
+   <tr><td><strong>Build</strong></td><td>15–18 g sauce + 20–25 g well-drained acid/slaw + 5–7 g dry crunch. Crunch always goes on last.</td></tr>
+   <tr><td><strong>Speed</strong></td><td>Target 25 seconds finishing time and 30 completed tickets/hour per two-person line.</td></tr>
+  </tbody></table>
+ </div>
+ <div class="panel">
+  <h3>Lead concept: Bay Miso Crunch</h3>
+  <div class="formula"><b>Build</b><br>Natural-casing smoked beef frank<br>Toasted milk-potato roll<br>White-miso mustard — 16 g<br>Rice-vinegar cabbage — 22 g, squeezed dry<br>Sourdough-nori crunch — 6 g, added last</div>
+  <p><strong>Why it is ownable:</strong> Japanese umami architecture plus a San Francisco sourdough crunch. It avoids the Kewpie-kimchi and terimayo lanes already occupied locally.</p>
+  <p><strong>Crunch batch:</strong> toasted sourdough crumb + crispy shallot + nori + sesame. Hold dry; never mix it into wet slaw.</p>
+  <p class="source">CULINARY RECOMMENDATION: confidence 7/10 pending blind taste and 30-minute hold tests. Natural-casing poach-and-grill technique: <a href="https://www.seriouseats.com/best-grilled-hot-dogs-recipe">Serious Eats</a>. Food safety: <a href="https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/meat-catfish/hot-dogs-food-safety">USDA FSIS</a>. Local product overlap: <a href="https://www.hayzdogsf.com/menu">Hayz Dog</a> and <a href="https://japadog.com/menu">JAPADOG</a>.</p>
+ </div>
+</div>
 <table>
 <thead><tr><th>Profile</th><th>Architecture</th><th>Ingredients</th><th>Operational read</th><th>Decision</th></tr></thead>
 <tbody>
@@ -224,6 +290,14 @@ function updatePresale(){
  pRev.textContent=money(revenue);pCost.textContent=money(total);pProfit.textContent=money(profit);pBE.textContent=money2(be);cls(pProfit,profit);
  pFormula.innerHTML='<b>Worked formula</b><br>Revenue = '+guests+' guaranteed guests × '+money(price)+' = '+money(revenue)+'<br>Food = '+one(units)+' dogs × '+money2(food)+' = '+money(foodCost)+'<br>Card = 2.6% of invoice + $0.15 = '+money(card)+'<br>Lead labor = '+leadH+' h × $35 = '+money(lead)+'; support = '+supportH+' h × $28 = '+money(support)+'<br>Other fully loaded costs = '+money(overhead)+'<br>Total cost = '+money(total)+'; profit = '+money(profit);
 }
+const afids=['traffic','eatRate','capture','apps','aprob'];
+function updateAccess(){
+ const people=val('traffic'),eat=val('eatRate')/100,share=val('capture')/100,n=val('apps'),p=val('aprob')/100,tickets=people*eat*share,atLeastOne=1-Math.pow(1-p,n);
+ trafficO.value=people.toLocaleString();eatRateO.value=Math.round(eat*100)+'%';captureO.value=Math.round(share*100)+'%';appsO.value=n;aprobO.value=Math.round(p*100)+'%';
+ ticketEstimate.textContent=Math.round(tickets)+' tx';placementP.textContent=(atLeastOne*100).toFixed(0)+'%';
+ trafficFormula.innerHTML='<b>Traffic conversion</b><br>'+people.toLocaleString()+' people × '+Math.round(eat*100)+'% buying food × '+Math.round(share*100)+'% captured = '+Math.round(tickets)+' expected tickets';
+ accessFormula.innerHTML='<b>Placement approximation</b><br>1 − (1 − '+Math.round(p*100)+'%)<sup>'+n+'</sup> = '+(atLeastOne*100).toFixed(1)+'% chance of at least one placement';
+}
 function drawCurve(unit,fixed,current){
  const svg=document.getElementById('curve'),W=720,H=310,L=62,R=20,T=28,B=45,maxX=180;let vals=[];for(let x=0;x<=maxX;x+=10)vals.push([x,x*unit-fixed]);let minY=Math.min(-500,...vals.map(x=>x[1])),maxY=Math.max(600,...vals.map(x=>x[1]));const sx=x=>L+x/maxX*(W-L-R),sy=y=>T+(maxY-y)/(maxY-minY)*(H-T-B);let s='<text x="0" y="14" fill="#8CA0B6" font-size="12" font-weight="700">EVENT CONTRIBUTION BY TRANSACTION VOLUME</text>';
  for(let i=0;i<5;i++){let y=minY+i*(maxY-minY)/4;s+='<line x1="'+L+'" y1="'+sy(y)+'" x2="'+(W-R)+'" y2="'+sy(y)+'" stroke="#263952"/><text x="'+(L-8)+'" y="'+(sy(y)+4)+'" text-anchor="end" fill="#5C7086" font-size="11">'+money(y)+'</text>'}
@@ -240,7 +314,7 @@ function updateFries(){const attach=val('fattach')/100,r=friesCalc(attach);fpric
 function drawFries(r){const svg=friesChart,W=720,H=280,L=62,R=25,T=25,B=40;let vals=[];for(let a=0;a<=1.001;a+=.1)vals.push([a,friesCalc(a).profit]);let minY=Math.min(-400,...vals.map(v=>v[1])),maxY=Math.max(250,...vals.map(v=>v[1]));const sx=x=>L+x*(W-L-R),sy=y=>T+(maxY-y)/(maxY-minY)*(H-T-B);let s='<text x="0" y="14" fill="#8CA0B6" font-size="12" font-weight="700">INCREMENTAL FRIES PROFIT BY ATTACH RATE</text>';for(let i=0;i<5;i++){let y=minY+i*(maxY-minY)/4;s+='<line x1="'+L+'" y1="'+sy(y)+'" x2="'+(W-R)+'" y2="'+sy(y)+'" stroke="#263952"/><text x="'+(L-8)+'" y="'+(sy(y)+4)+'" text-anchor="end" fill="#5C7086" font-size="11">'+money(y)+'</text>'}s+='<line x1="'+L+'" y1="'+sy(0)+'" x2="'+(W-R)+'" y2="'+sy(0)+'" stroke="#F4EFE6"/><polyline points="'+vals.map(v=>sx(v[0])+','+sy(v[1])).join(' ')+'" fill="none" stroke="#F0A500" stroke-width="4"/>';for(let a=0;a<=1;a+=.2)s+='<text x="'+sx(a)+'" y="'+(H-12)+'" text-anchor="middle" fill="#5C7086" font-size="11">'+Math.round(a*100)+'%</text>';svg.innerHTML=s}
 function updateScale(){const ep=val('ep'),ew=val('ew'),annual=ep*ew*52,req2=ep?2000000/ep/52:Infinity,req4=ep?4000000/ep/52:Infinity,gap=Math.max(0,1-annual/2000000);epO.value=money(ep);ewO.value=ew+'/wk';annualV.textContent=money(annual);events2m.textContent=isFinite(req2)?one(req2)+'/wk':'never';events4m.textContent=isFinite(req4)?one(req4)+'/wk':'never';gapPct.textContent=(gap*100).toFixed(0)+'%';scaleFormula.innerHTML='<b>Worked formula</b><br>'+money(ep)+' per event × '+ew+' events/week × 52 weeks = '+money(annual)+' per year';drawScale(annual)}
 function drawScale(annual){const svg=scaleChart,W=720,H=220,L=150,R=30,T=30,B=30,max=4000000;let items=[['Selected run-rate',annual,'#F0A500'],['Portfolio floor',2000000,'#3FB8AF'],['Portfolio high',4000000,'#5BAA5B']];let s='';items.forEach((d,i)=>{let y=T+i*58,w=Math.min(W-L-R,d[1]/max*(W-L-R)),inside=w>125,labelX=inside?L+w-8:L+w+8,anchor=inside?'end':'start';s+='<text x="0" y="'+(y+20)+'" fill="#8CA0B6" font-size="13">'+d[0]+'</text><rect x="'+L+'" y="'+y+'" width="'+w+'" height="28" fill="'+d[2]+'"/><text x="'+labelX+'" y="'+(y+20)+'" text-anchor="'+anchor+'" fill="#F4EFE6" font-size="12">'+money(d[1])+'</text>'});svg.innerHTML=s}
-ids.forEach(id=>document.getElementById(id).addEventListener('input',()=>{update();updateFries()}));pids.forEach(id=>document.getElementById(id).addEventListener('input',updatePresale));fids.forEach(id=>document.getElementById(id).addEventListener('input',updateFries));['ep','ew'].forEach(id=>document.getElementById(id).addEventListener('input',updateScale));drawChannels();update();updatePresale();updateFries();updateScale();
+ids.forEach(id=>document.getElementById(id).addEventListener('input',()=>{update();updateFries()}));pids.forEach(id=>document.getElementById(id).addEventListener('input',updatePresale));afids.forEach(id=>document.getElementById(id).addEventListener('input',updateAccess));fids.forEach(id=>document.getElementById(id).addEventListener('input',updateFries));['ep','ew'].forEach(id=>document.getElementById(id).addEventListener('input',updateScale));drawChannels();update();updatePresale();updateAccess();updateFries();updateScale();
 </script>
 </body>
 </html>
