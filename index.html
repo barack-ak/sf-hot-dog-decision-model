@@ -41,14 +41,14 @@ footer{padding:25px 8%;border-top:1px solid var(--grid);color:var(--dim);font-si
 <div class="sectionhead"><h2>Adjustable event model</h2><p>Yellow values are inputs. Every output updates immediately. Prices are pre-tax because sales tax collected is not revenue.</p></div>
 <div class="modelgrid">
  <div class="panel controls">
-  <div class="control"><label for="tx">Transactions</label><output id="txO"></output><input id="tx" type="range" min="20" max="180" step="5" value="100"></div>
+  <div class="control"><label for="tx">Transactions</label><output id="txO"></output><input id="tx" type="range" min="20" max="500" step="5" value="100"></div>
   <div class="control"><label for="aov">Pre-tax average ticket</label><output id="aovO"></output><input id="aov" type="range" min="10" max="30" step="0.25" value="15.25"></div>
   <div class="control"><label for="food">Food + packaging as % of sales</label><output id="foodO"></output><input id="food" type="range" min="20" max="45" step="1" value="31"></div>
   <div class="control"><label for="hours">Total labor-hours</label><output id="hoursO"></output><input id="hours" type="range" min="10" max="35" step="1" value="20"></div>
   <div class="control"><label for="wage">Loaded labor rate</label><output id="wageO"></output><input id="wage" type="range" min="20" max="50" step="1" value="28"></div>
   <div class="control"><label for="kh">Commissary hours</label><output id="khO"></output><input id="kh" type="range" min="0" max="10" step="0.5" value="4.5"></div>
   <div class="control"><label for="kr">Commissary rate</label><output id="krO"></output><input id="kr" type="range" min="20" max="70" step="1" value="35"></div>
-  <div class="control"><label for="fee">Organizer fixed fee</label><output id="feeO"></output><input id="fee" type="range" min="0" max="1000" step="25" value="125"></div>
+  <div class="control"><label for="fee">Organizer fixed fee</label><output id="feeO"></output><input id="fee" type="range" min="0" max="2500" step="25" value="125"></div>
   <div class="control"><label for="share">Organizer share of sales</label><output id="shareO"></output><input id="share" type="range" min="0" max="20" step="1" value="0"></div>
   <div class="control"><label for="other">Transport + daily reserve</label><output id="otherO"></output><input id="other" type="range" min="0" max="400" step="10" value="150"></div>
  </div>
@@ -102,6 +102,21 @@ footer{padding:25px 8%;border-top:1px solid var(--grid);color:var(--dim);font-si
   <div class="formula"><b>Planning default</b><br>Pre-sold: 75 guests × $22 = $1,650 revenue; about $1,339 fully loaded cost; about $311 profit.<br>Public event: 100 tickets × $15.25 = $1,525 revenue; about $1,520 cost; about $5 profit.</div>
   <p class="source">PLANNING ESTIMATES: labor, kitchen, transport, supplies and consumption. VERIFIED INPUTS: Square's listed card rate and SF minimum wage. Adjust the yellow controls before using either case.</p>
  </div>
+</div>
+<div class="panel" style="margin-top:18px">
+ <h3>One-time launch cash — before the first sale</h3>
+ <table><thead><tr><th>Cost line</th><th>Pre-sold catering</th><th>Public market/event</th></tr></thead><tbody>
+ <tr><td>Permits, registration, insurance allowance</td><td class="num">$900</td><td class="num">$900</td></tr>
+ <tr><td>Cooking / hot-holding equipment</td><td class="num">$450</td><td class="num">$900</td></tr>
+ <tr><td>Cold chain, smallwares, thermometers</td><td class="num">$250</td><td class="num">$500</td></tr>
+ <tr><td>Tent, tables, weights, handwash</td><td class="num">$0</td><td class="num">$1,250</td></tr>
+ <tr><td>Kitchen deposit / first production shifts</td><td class="num">$350</td><td class="num">$0</td></tr>
+ <tr><td>POS, signage and serviceware</td><td class="num">$300</td><td class="num">$500</td></tr>
+ <tr><td>Initial inventory</td><td class="num">$400</td><td class="num">$500</td></tr>
+ <tr><td>Working cash / contingency</td><td class="num">$400</td><td class="num">$1,200</td></tr>
+ <tr><td><strong>Planning total</strong></td><td class="num"><strong>$3,050</strong></td><td class="num"><strong>$5,750</strong></td></tr>
+ </tbody></table>
+ <p class="source">ESTIMATED, confidence 5/10: rent/borrow-first launch budget. It excludes a truck, trailer, fryer and custom sausage production. Supplier quotes and the selected venue can move this materially.</p>
 </div>
 </section>
 
@@ -299,11 +314,11 @@ function updateAccess(){
  accessFormula.innerHTML='<b>Placement approximation</b><br>1 − (1 − '+Math.round(p*100)+'%)<sup>'+n+'</sup> = '+(atLeastOne*100).toFixed(1)+'% chance of at least one placement';
 }
 function drawCurve(unit,fixed,current){
- const svg=document.getElementById('curve'),W=720,H=310,L=62,R=20,T=28,B=45,maxX=180;let vals=[];for(let x=0;x<=maxX;x+=10)vals.push([x,x*unit-fixed]);let minY=Math.min(-500,...vals.map(x=>x[1])),maxY=Math.max(600,...vals.map(x=>x[1]));const sx=x=>L+x/maxX*(W-L-R),sy=y=>T+(maxY-y)/(maxY-minY)*(H-T-B);let s='<text x="0" y="14" fill="#8CA0B6" font-size="12" font-weight="700">EVENT CONTRIBUTION BY TRANSACTION VOLUME</text>';
+ const svg=document.getElementById('curve'),W=720,H=310,L=62,R=20,T=28,B=45,maxX=Math.max(180,Math.ceil(current/50)*50);let vals=[];for(let x=0;x<=maxX;x+=10)vals.push([x,x*unit-fixed]);let minY=Math.min(-500,...vals.map(x=>x[1])),maxY=Math.max(600,...vals.map(x=>x[1]));const sx=x=>L+x/maxX*(W-L-R),sy=y=>T+(maxY-y)/(maxY-minY)*(H-T-B);let s='<text x="0" y="14" fill="#8CA0B6" font-size="12" font-weight="700">EVENT CONTRIBUTION BY TRANSACTION VOLUME</text>';
  for(let i=0;i<5;i++){let y=minY+i*(maxY-minY)/4;s+='<line x1="'+L+'" y1="'+sy(y)+'" x2="'+(W-R)+'" y2="'+sy(y)+'" stroke="#263952"/><text x="'+(L-8)+'" y="'+(sy(y)+4)+'" text-anchor="end" fill="#5C7086" font-size="11">'+money(y)+'</text>'}
  s+='<line x1="'+L+'" y1="'+sy(0)+'" x2="'+(W-R)+'" y2="'+sy(0)+'" stroke="#F4EFE6" stroke-width="1"/>';
  const pts=vals.map(v=>sx(v[0])+','+sy(v[1])).join(' ');s+='<polyline points="'+pts+'" fill="none" stroke="#3FB8AF" stroke-width="4"/>';
- for(let x=0;x<=180;x+=30)s+='<text x="'+sx(x)+'" y="'+(H-15)+'" text-anchor="middle" fill="#5C7086" font-size="11">'+x+'</text>';
+ for(let x=0;x<=maxX;x+=maxX/6)s+='<text x="'+sx(x)+'" y="'+(H-15)+'" text-anchor="middle" fill="#5C7086" font-size="11">'+Math.round(x)+'</text>';
  let cy=current*unit-fixed;s+='<circle cx="'+sx(current)+'" cy="'+sy(cy)+'" r="7" fill="#F0A500"/><text x="'+Math.min(W-85,sx(current)+10)+'" y="'+(sy(cy)-10)+'" fill="#F0A500" font-size="12" font-weight="700">'+current+' tx: '+money(cy)+'</text>';svg.innerHTML=s;
 }
 const channelData=[['Pre-sold private/corporate',278,.91],['Outer Sunset Farmers Market',-216,.16],['Off the Grid public market',-232,.14],['Mission Community Market',-343,.03],['Ferry Plaza Tuesday',-250,.13],['Alemany Saturday',-548,0.00002]];
