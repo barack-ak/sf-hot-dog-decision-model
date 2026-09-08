@@ -67,6 +67,45 @@ footer{padding:25px 8%;border-top:1px solid var(--grid);color:var(--dim);font-si
 </section>
 
 <section>
+<div class="sectionhead"><h2>Pre-sold catering versus public event</h2><p>Two different businesses. Catering locks demand before production; public events buy uncertain foot traffic. Every labor and overhead line is shown.</p></div>
+<div class="twocol">
+ <div class="panel controls">
+  <h3>Pre-sold catering calculator</h3>
+  <div class="control"><label for="pg">Guaranteed guests</label><output id="pgO"></output><input id="pg" type="range" min="25" max="200" step="5" value="75"></div>
+  <div class="control"><label for="pp">Price per guest</label><output id="ppO"></output><input id="pp" type="range" min="14" max="40" step="1" value="22"></div>
+  <div class="control"><label for="pd">Dogs per guest</label><output id="pdO"></output><input id="pd" type="range" min="0.8" max="1.5" step="0.05" value="1.10"></div>
+  <div class="control"><label for="pc">Food + packaging per dog</label><output id="pcO"></output><input id="pc" type="range" min="3" max="8" step="0.10" value="4.73"></div>
+  <div class="control"><label for="plh">Lead labor hours</label><output id="plhO"></output><input id="plh" type="range" min="4" max="16" step="1" value="8"></div>
+  <div class="control"><label for="psh">Support labor hours</label><output id="pshO"></output><input id="psh" type="range" min="4" max="16" step="1" value="7"></div>
+  <div class="control"><label for="poh">Kitchen, transport, supplies, permit, insurance, admin</label><output id="pohO"></output><input id="poh" type="range" min="200" max="900" step="25" value="530"></div>
+  <div class="resultgrid">
+   <div class="result"><div class="label">Revenue</div><div class="value" id="pRev"></div></div>
+   <div class="result"><div class="label">Total cost</div><div class="value" id="pCost"></div></div>
+   <div class="result"><div class="label">Profit</div><div class="value" id="pProfit"></div></div>
+   <div class="result"><div class="label">Break-even price</div><div class="value" id="pBE"></div></div>
+  </div>
+  <div class="formula" id="pFormula"></div>
+ </div>
+ <div class="panel">
+  <h3>Public event cost stack</h3>
+  <table><tbody>
+   <tr><td>Food + packaging</td><td class="num" id="eFood"></td></tr>
+   <tr><td>Card processing</td><td class="num" id="eCard"></td></tr>
+   <tr><td>Service labor</td><td class="num" id="eLabor"></td></tr>
+   <tr><td>Kitchen labor</td><td class="num" id="eKitchen"></td></tr>
+   <tr><td>Venue fee + revenue share</td><td class="num" id="eVenue"></td></tr>
+   <tr><td>Transport, ice, fuel, consumables</td><td class="num" id="eOther"></td></tr>
+   <tr><td><strong>Total operating cost</strong></td><td class="num"><strong id="eTotal"></strong></td></tr>
+   <tr><td>Revenue</td><td class="num" id="eRevenue"></td></tr>
+   <tr><td><strong>Event profit</strong></td><td class="num"><strong id="eProfit"></strong></td></tr>
+  </tbody></table>
+  <div class="formula"><b>Planning default</b><br>Pre-sold: 75 guests × $22 = $1,650 revenue; about $1,339 fully loaded cost; about $311 profit.<br>Public event: 100 tickets × $15.25 = $1,525 revenue; about $1,520 cost; about $5 profit.</div>
+  <p class="source">PLANNING ESTIMATES: labor, kitchen, transport, supplies and consumption. VERIFIED INPUTS: Square's listed card rate and SF minimum wage. Adjust the yellow controls before using either case.</p>
+ </div>
+</div>
+</section>
+
+<section>
 <div class="sectionhead"><h2>Channel economics</h2><p>The median outcome matters more than prestige. Bars use the 50,000-run model and include labor, kitchen, transport, venue, card, and food costs.</p></div>
 <div class="legend"><span><i class="dot red"></i>median loss</span><span><i class="dot green"></i>median profit</span></div>
 <div class="channels" id="channels"></div>
@@ -173,8 +212,17 @@ function update(){
  const sales=tx*aov, card=sales*.026+tx*.15, variable=sales*(food+share)+card, fixed=hours*wage+kh*kr+fee+other, profit=sales-variable-fixed, unit=aov*(1-food-share-.026)-.15, be=fixed/unit, ph=profit/hours;
  txO.value=tx; aovO.value=money2(aov); foodO.value=(food*100).toFixed(0)+'%'; hoursO.value=hours+' h'; wageO.value=money(wage)+'/h'; khO.value=kh+' h'; krO.value=money(kr)+'/h'; feeO.value=money(fee); shareO.value=(share*100).toFixed(0)+'%'; otherO.value=money(other);
  salesV.textContent=money(sales);profitV.textContent=money(profit);beV.textContent=isFinite(be)?one(be)+' tx':'never';phV.textContent=money(ph)+'/h';kpiBE.textContent=isFinite(be)?Math.ceil(be)+' tx':'never';kpiProfit.textContent=money(profit);cls(profitV,profit);cls(phV,ph);cls(kpiProfit,profit);
+ eFood.textContent=money(sales*food);eCard.textContent=money(card);eLabor.textContent=money(hours*wage);eKitchen.textContent=money(kh*kr);eVenue.textContent=money(fee+sales*share);eOther.textContent=money(other);eTotal.textContent=money(sales-profit);eRevenue.textContent=money(sales);eProfit.textContent=money(profit);cls(eProfit,profit);
  formula.innerHTML='<b>Worked formula</b><br>Sales = '+tx+' × '+money2(aov)+' = '+money(sales)+'<br>Unit contribution = '+money2(aov)+' × (1 − '+(food*100).toFixed(0)+'% food − '+(share*100).toFixed(0)+'% venue − 2.6% card) − $0.15 = '+money2(unit)+'<br>Fixed operating cost = labor '+money(hours*wage)+' + kitchen '+money(kh*kr)+' + venue '+money(fee)+' + other '+money(other)+' = '+money(fixed)+'<br>Break-even = '+money(fixed)+' ÷ '+money2(unit)+' = '+one(be)+' transactions';
  drawCurve(unit,fixed,tx);
+}
+const pids=['pg','pp','pd','pc','plh','psh','poh'];
+function updatePresale(){
+ const guests=val('pg'),price=val('pp'),dogs=val('pd'),food=val('pc'),leadH=val('plh'),supportH=val('psh'),overhead=val('poh');
+ const revenue=guests*price,units=guests*dogs,foodCost=units*food,card=revenue*.026+.15,lead=leadH*35,support=supportH*28,total=foodCost+card+lead+support+overhead,profit=revenue-total,be=total/guests;
+ pgO.value=guests;ppO.value=money(price)+'/guest';pdO.value=dogs.toFixed(2);pcO.value=money2(food);plhO.value=leadH+' h';pshO.value=supportH+' h';pohO.value=money(overhead);
+ pRev.textContent=money(revenue);pCost.textContent=money(total);pProfit.textContent=money(profit);pBE.textContent=money2(be);cls(pProfit,profit);
+ pFormula.innerHTML='<b>Worked formula</b><br>Revenue = '+guests+' guaranteed guests × '+money(price)+' = '+money(revenue)+'<br>Food = '+one(units)+' dogs × '+money2(food)+' = '+money(foodCost)+'<br>Card = 2.6% of invoice + $0.15 = '+money(card)+'<br>Lead labor = '+leadH+' h × $35 = '+money(lead)+'; support = '+supportH+' h × $28 = '+money(support)+'<br>Other fully loaded costs = '+money(overhead)+'<br>Total cost = '+money(total)+'; profit = '+money(profit);
 }
 function drawCurve(unit,fixed,current){
  const svg=document.getElementById('curve'),W=720,H=310,L=62,R=20,T=28,B=45,maxX=180;let vals=[];for(let x=0;x<=maxX;x+=10)vals.push([x,x*unit-fixed]);let minY=Math.min(-500,...vals.map(x=>x[1])),maxY=Math.max(600,...vals.map(x=>x[1]));const sx=x=>L+x/maxX*(W-L-R),sy=y=>T+(maxY-y)/(maxY-minY)*(H-T-B);let s='<text x="0" y="14" fill="#8CA0B6" font-size="12" font-weight="700">EVENT CONTRIBUTION BY TRANSACTION VOLUME</text>';
@@ -192,7 +240,7 @@ function updateFries(){const attach=val('fattach')/100,r=friesCalc(attach);fpric
 function drawFries(r){const svg=friesChart,W=720,H=280,L=62,R=25,T=25,B=40;let vals=[];for(let a=0;a<=1.001;a+=.1)vals.push([a,friesCalc(a).profit]);let minY=Math.min(-400,...vals.map(v=>v[1])),maxY=Math.max(250,...vals.map(v=>v[1]));const sx=x=>L+x*(W-L-R),sy=y=>T+(maxY-y)/(maxY-minY)*(H-T-B);let s='<text x="0" y="14" fill="#8CA0B6" font-size="12" font-weight="700">INCREMENTAL FRIES PROFIT BY ATTACH RATE</text>';for(let i=0;i<5;i++){let y=minY+i*(maxY-minY)/4;s+='<line x1="'+L+'" y1="'+sy(y)+'" x2="'+(W-R)+'" y2="'+sy(y)+'" stroke="#263952"/><text x="'+(L-8)+'" y="'+(sy(y)+4)+'" text-anchor="end" fill="#5C7086" font-size="11">'+money(y)+'</text>'}s+='<line x1="'+L+'" y1="'+sy(0)+'" x2="'+(W-R)+'" y2="'+sy(0)+'" stroke="#F4EFE6"/><polyline points="'+vals.map(v=>sx(v[0])+','+sy(v[1])).join(' ')+'" fill="none" stroke="#F0A500" stroke-width="4"/>';for(let a=0;a<=1;a+=.2)s+='<text x="'+sx(a)+'" y="'+(H-12)+'" text-anchor="middle" fill="#5C7086" font-size="11">'+Math.round(a*100)+'%</text>';svg.innerHTML=s}
 function updateScale(){const ep=val('ep'),ew=val('ew'),annual=ep*ew*52,req2=ep?2000000/ep/52:Infinity,req4=ep?4000000/ep/52:Infinity,gap=Math.max(0,1-annual/2000000);epO.value=money(ep);ewO.value=ew+'/wk';annualV.textContent=money(annual);events2m.textContent=isFinite(req2)?one(req2)+'/wk':'never';events4m.textContent=isFinite(req4)?one(req4)+'/wk':'never';gapPct.textContent=(gap*100).toFixed(0)+'%';scaleFormula.innerHTML='<b>Worked formula</b><br>'+money(ep)+' per event × '+ew+' events/week × 52 weeks = '+money(annual)+' per year';drawScale(annual)}
 function drawScale(annual){const svg=scaleChart,W=720,H=220,L=150,R=30,T=30,B=30,max=4000000;let items=[['Selected run-rate',annual,'#F0A500'],['Portfolio floor',2000000,'#3FB8AF'],['Portfolio high',4000000,'#5BAA5B']];let s='';items.forEach((d,i)=>{let y=T+i*58,w=Math.min(W-L-R,d[1]/max*(W-L-R)),inside=w>125,labelX=inside?L+w-8:L+w+8,anchor=inside?'end':'start';s+='<text x="0" y="'+(y+20)+'" fill="#8CA0B6" font-size="13">'+d[0]+'</text><rect x="'+L+'" y="'+y+'" width="'+w+'" height="28" fill="'+d[2]+'"/><text x="'+labelX+'" y="'+(y+20)+'" text-anchor="'+anchor+'" fill="#F4EFE6" font-size="12">'+money(d[1])+'</text>'});svg.innerHTML=s}
-ids.forEach(id=>document.getElementById(id).addEventListener('input',()=>{update();updateFries()}));fids.forEach(id=>document.getElementById(id).addEventListener('input',updateFries));['ep','ew'].forEach(id=>document.getElementById(id).addEventListener('input',updateScale));drawChannels();update();updateFries();updateScale();
+ids.forEach(id=>document.getElementById(id).addEventListener('input',()=>{update();updateFries()}));pids.forEach(id=>document.getElementById(id).addEventListener('input',updatePresale));fids.forEach(id=>document.getElementById(id).addEventListener('input',updateFries));['ep','ew'].forEach(id=>document.getElementById(id).addEventListener('input',updateScale));drawChannels();update();updatePresale();updateFries();updateScale();
 </script>
 </body>
 </html>
