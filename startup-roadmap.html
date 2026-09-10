@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>DogonJohns Startup Requirements Tracker</title>
+<style>
+:root{--ink:#172033;--muted:#667085;--paper:#f5f1e8;--panel:#fffdf8;--line:#d7d0c3;--gold:#d4a72c;--green:#237a57;--red:#a64232;--blue:#275d82;--yellow:#fff4c2}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.45 Georgia,serif}button,input,select,textarea{font:inherit}button{cursor:pointer}a{color:var(--blue)}
+.top{position:sticky;top:0;z-index:10;background:rgba(245,241,232,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.topin{max-width:1180px;margin:auto;padding:12px 18px;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center}.brand{font:bold 20px/1 Georgia,serif}.brand span{color:var(--red)}.status{font:12px/1.2 Arial,sans-serif;color:var(--muted);margin-top:5px}.tools{display:flex;gap:8px;flex-wrap:wrap}.btn{border:1px solid var(--ink);background:var(--panel);padding:9px 12px;min-height:44px;border-radius:4px;font:700 12px Arial,sans-serif}.btn.primary{background:var(--ink);color:white}.btn.danger{border-color:var(--red);color:var(--red)}
+main{max-width:1180px;margin:auto;padding:24px 18px 60px}.intro{display:grid;grid-template-columns:1.3fr .7fr;gap:24px;border-bottom:3px solid var(--ink);padding-bottom:24px}.eyebrow{font:800 12px Arial,sans-serif;letter-spacing:.12em;color:var(--red)}h1{font-size:clamp(36px,6vw,68px);line-height:.95;margin:8px 0 16px;letter-spacing:-.04em}.lede{font-size:19px;max-width:720px;margin:0}.rule{background:var(--ink);color:white;padding:18px}.rule b{color:#f5cf62}.rule ul{padding-left:18px;margin-bottom:0}
+.scoreboard{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--ink);border:1px solid var(--ink);margin:24px 0}.score{background:var(--panel);padding:16px}.score .n{font:800 28px Arial,sans-serif}.score .l{font:11px Arial,sans-serif;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.progress{height:9px;background:#ded8cc;border-radius:9px;overflow:hidden;margin-top:8px}.progress i{display:block;height:100%;background:var(--green);width:0}
+.controlbar{display:grid;grid-template-columns:1fr 180px 180px;gap:10px;margin:18px 0}.controlbar input,.controlbar select{width:100%;min-height:44px;border:1px solid var(--line);background:var(--panel);padding:10px;border-radius:4px}
+.alert{background:var(--yellow);border:1px solid #d9bd4b;padding:13px 15px;margin:18px 0;font-family:Arial,sans-serif}.phase{margin:34px 0}.phasehead{display:flex;justify-content:space-between;align-items:end;border-bottom:2px solid var(--ink);padding-bottom:8px;margin-bottom:10px}.phase h2{margin:0;font-size:26px}.phasecount{font:12px Arial,sans-serif;color:var(--muted)}
+.task{display:grid;grid-template-columns:34px minmax(220px,1.5fr) 130px 120px minmax(210px,1fr);gap:12px;padding:13px 6px;border-bottom:1px solid var(--line);align-items:start;background:transparent}.task.done{opacity:.58}.task.blocked{background:#fff0ec}.check{width:24px;height:24px;margin:2px 0;accent-color:var(--green)}.taskname{font-weight:bold}.why{font:13px Arial,sans-serif;color:var(--muted);margin-top:4px}.meta{font:12px Arial,sans-serif}.meta b{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:3px}.evidence input{width:100%;border:1px solid var(--line);padding:8px;background:var(--panel);min-height:38px}.evidence a{font:12px Arial,sans-serif}.tag{display:inline-block;padding:3px 6px;border-radius:3px;font:700 10px Arial,sans-serif;text-transform:uppercase;letter-spacing:.05em}.required{background:#f4d3cc;color:#762c20}.proof{background:#dce9d7;color:#285b32}.spend{background:#d8e7f0;color:#204f6e}.gate{background:#eee1b6;color:#624d09}
+.costs,.refs{overflow:auto;background:var(--panel);border:1px solid var(--line)}table{border-collapse:collapse;width:100%;min-width:700px}th,td{text-align:left;padding:10px;border-bottom:1px solid var(--line);vertical-align:top}th{background:var(--ink);color:white;font:700 12px Arial,sans-serif}.money{text-align:right;font-family:Arial,sans-serif}.small{font:12px Arial,sans-serif;color:var(--muted)}
+.notes{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}.notes textarea{width:100%;height:150px;border:1px solid var(--line);background:var(--panel);padding:12px}.foot{border-top:2px solid var(--ink);padding-top:20px;margin-top:36px;font:12px Arial,sans-serif;color:var(--muted)}
+@media(max-width:850px){.top{position:static}.intro{grid-template-columns:1fr}.scoreboard{grid-template-columns:1fr 1fr}.controlbar{grid-template-columns:1fr}.task{grid-template-columns:34px 1fr}.task>.meta,.task>.evidence{grid-column:2}.notes{grid-template-columns:1fr}.topin{grid-template-columns:1fr}.tools{display:grid;grid-template-columns:1fr 1fr}.btn{width:100%}.phasehead{align-items:start;gap:10px}table{min-width:650px}.costs:before,.refs:before{content:'Swipe table →';display:block;position:sticky;left:0;width:125px;padding:6px 9px;background:var(--gold);font:700 11px Arial,sans-serif}}
+@media print{.top,.controlbar,.tools{display:none}.task{break-inside:avoid}.phase{break-before:auto}body{background:white}.scoreboard{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header class="top"><div class="topin"><div><div class="brand">Dogon<span>Johns!</span> Startup Requirements</div><div class="status">Local progress tracker · saved on this browser only · last updated <span id="saved">never</span></div></div><div class="tools"><button class="btn" onclick="window.print()">Print / PDF</button><button class="btn" onclick="exportData()">Export progress</button><button class="btn" onclick="document.getElementById('import').click()">Import</button><input id="import" type="file" accept="application/json" hidden onchange="importData(event)"><button class="btn danger" onclick="resetAll()">Reset</button></div></div></header>
+<main>
+<section class="intro"><div><div class="eyebrow">OPERATE · NOT A PITCH DECK</div><h1>Proof first.<br>Permits second.<br>Equipment last.</h1><p class="lede">This is the execution order for a San Francisco temporary food business. Check an item only when its evidence exists. A conversation is not completion.</p></div><aside class="rule"><b>Release rule</b><ul><li>No purchase before the preceding gate is complete.</li><li>No public event before a full 60-ticket rehearsal.</li><li>No booth two before three operator-run events earn $500+ median profit.</li></ul></aside></section>
+<div class="scoreboard"><div class="score"><div class="n" id="pct">0%</div><div class="l">requirements complete</div><div class="progress"><i id="bar"></i></div></div><div class="score"><div class="n" id="complete">0</div><div class="l">items complete</div></div><div class="score"><div class="n" id="blocked">0</div><div class="l">blocked items</div></div><div class="score"><div class="n" id="budget">$0</div><div class="l">approved spend checked</div></div></div>
+<div class="alert"><b>Planning status:</b> candidate evaluation. This tracker does not authorize spending, create a permit, or replace agency instructions. Verify each linked requirement against the event and operating method before money moves.</div>
+<div class="controlbar"><input id="search" placeholder="Search requirements…" oninput="render()"><select id="phaseFilter" onchange="render()"><option value="all">All phases</option></select><select id="stateFilter" onchange="render()"><option value="all">All states</option><option value="open">Open</option><option value="done">Complete</option><option value="blocked">Blocked</option></select></div>
+<div id="phases"></div>
+<section><div class="phasehead"><h2>Startup cash map</h2><span class="phasecount">Planning values; quotes replace estimates</span></div><div class="costs"><table><thead><tr><th>Class</th><th class="money">Low / rent-first</th><th class="money">Purchased base</th><th class="money">High</th><th>Release condition</th></tr></thead><tbody><tr><td>Regulatory and administration</td><td class="money">$897</td><td class="money">$2,438</td><td class="money">$3,912</td><td>Only after authorization and operator gate</td></tr><tr><td>Equipment</td><td class="money">$2,615</td><td class="money">$6,094</td><td class="money">$10,260</td><td>Rent first; buy after product and dry-run gates</td></tr><tr><td>Working capital</td><td class="money">$1,250</td><td class="money">$2,350</td><td class="money">$4,000</td><td>Inventory bought against contracted demand</td></tr><tr><th>Total</th><th class="money">$4,762</th><th class="money">$10,882</th><th class="money">$18,172</th><th>No fryer included</th></tr></tbody></table></div></section>
+<section class="notes"><div><h2>Decision log</h2><textarea id="decisions" placeholder="Date · decision · owner · reason" oninput="saveText()"></textarea></div><div><h2>Open risks</h2><textarea id="risks" placeholder="Risk · trigger · mitigation · owner" oninput="saveText()"></textarea></div></section>
+<section><div class="phasehead"><h2>Official references</h2><span class="phasecount">Open the source before filing</span></div><div class="refs"><table><thead><tr><th>Requirement</th><th>Official source</th><th>What it establishes</th></tr></thead><tbody>
+<tr><td>Temporary food facility</td><td><a href="https://www.sf.gov/sell-food-at-special-events" target="_blank">SFDPH: Sell food at special events</a></td><td>A food booth at a public special event needs the applicable TFF route.</td></tr>
+<tr><td>Annual high-hazard booth</td><td><a href="https://www.sf.gov/sell-prepared-or-packaged-food-farmers-market-san-francisco" target="_blank">SFDPH: Farmers' market food permits</a></td><td>Preparing food onsite points to an annual high-hazard TFF permit.</td></tr>
+<tr><td>Food handling</td><td><a href="https://www.sf.gov/information--food-handling-rules-special-events" target="_blank">SFDPH food-handling rules</a></td><td>Approved sources; 41°F cold baseline; 135°F hot holding; thermometers; contamination controls.</td></tr>
+<tr><td>Handwashing</td><td><a href="https://www.sf.gov/information--set-handwashing-station-temporary-food-booth" target="_blank">SFDPH handwash setup</a></td><td>100–108°F potable water, hands-free flowing spigot, soap, towels, 5-gallon wastewater and garbage.</td></tr>
+<tr><td>Commissary</td><td><a href="https://www.sf.gov/sites/default/files/2024-11/Annual%20Temp%20Event%20Permit%20Supplemental%20Forms.pdf" target="_blank">SFDPH commissary verification form</a></td><td>If there is no permitted facility, permission to use a kitchen or commissary is required.</td></tr>
+<tr><td>Fire and propane</td><td><a href="https://sf-fire.org/510-safety-requirements-regulated-activities-outdoor-food-and-street-fairs" target="_blank">SFFD Bulletin 5.10</a></td><td>Five-business-day filing minimum; flame resistance; extinguisher; cooking-area, LPG and generator rules.</td></tr>
+<tr><td>Seller's permit</td><td><a href="https://www.cdtfa.ca.gov/taxes-and-fees/faqseller.htm" target="_blank">CDTFA seller's permit</a></td><td>California retailers of taxable tangible goods need a seller's permit; registration is free.</td></tr>
+<tr><td>Workers' compensation</td><td><a href="https://www.dir.ca.gov/dwc/employer.htm" target="_blank">California DIR employer information</a></td><td>Coverage is required even with one employee.</td></tr>
+<tr><td>Food safety training</td><td><a href="https://www.cdph.ca.gov/Programs/CEH/DFDCS/Pages/FDBPrograms/FoodSafetyProgram/FoodSafetyTraining.aspx" target="_blank">CDPH food-safety training</a></td><td>Use approved certification/training appropriate to the retail-food operation.</td></tr>
+</tbody></table></div></section>
+<div class="foot">External pages can change. Evidence entered here stays only in this browser unless exported. This is an operational tracker, not legal, tax or food-safety advice.</div>
+</main>
+<script>
+const phases=[
+{id:'decision',name:'0 · Authorization and ownership',tasks:[
+['authorization','Record written pilot authorization and maximum cumulative-loss cap','Decision owner','2026-09-12','gate',0,'Evidence: signed decision note'],
+['operator','Name one accountable operator who is not a standing founder shift','Decision owner','2026-09-12','gate',0,'Evidence: written role acceptance'],
+['entity-path','Choose operating entity, trade name path and accounting owner','Finance owner','2026-09-15','required',0,'Evidence: decision memo'],
+['budget-release','Approve staged budget—not the full purchased setup','Finance owner','2026-09-15','spend',500,'Evidence: first-stage cap'],
+]},
+{id:'product',name:'1 · Product proof before permits',tasks:[
+['recipe-cards','Write gram-based recipe and allergen card for all four dogs','Product lead','2026-09-20','proof',150,'Evidence: four signed recipe cards'],
+['frank-quotes','Obtain delivered quotes for three 4 oz all-beef franks','Product lead','2026-09-20','proof',0,'Evidence: three written quotes'],
+['bun-quotes','Quote premium and backup buns; target delivered cost ≤ $0.85','Product lead','2026-09-20','proof',0,'Evidence: two written quotes'],
+['taste-test','Run 50 blind tastes with price shown before brand explanation','Research lead','2026-09-30','gate',350,'Pass: ≥60% definitely buy again'],
+['hold-test','Run 5-, 10- and 20-minute packaging and sogginess test','Product lead','2026-09-30','proof',100,'Evidence: scored photos/results'],
+['egg-test','Run two-hour Breakfast Delight egg hold-quality and safety test','Food safety lead','2026-09-30','proof',100,'Evidence: temperature/quality log'],
+['menu-freeze','Freeze launch recipes, prices, suppliers and backup SKUs','Product lead','2026-10-01','gate',0,'Evidence: approved menu sheet'],
+]},
+{id:'legal',name:'2 · Business, tax, insurance and labor',tasks:[
+['name-clearance','Search business name, trademark, domain and social handles','Admin owner','2026-09-22','required',0,'Evidence: dated clearance log'],
+['business-registration','Complete applicable entity/DBA and San Francisco business registration','Admin owner','2026-09-25','required',350,'Evidence: registration numbers'],
+['seller-permit','Obtain California seller’s permit','Finance owner','2026-09-25','required',0,'Evidence: permit number'],
+['bank-books','Open dedicated banking, bookkeeping and sales-tax workflow','Finance owner','2026-09-27','required',100,'Evidence: account + chart of accounts'],
+['insurance','Bind general/product liability and obtain organizer-ready COI','Finance owner','2026-10-01','required',737,'Evidence: policy + COI'],
+['food-manager','Certify the responsible food-safety manager','Food safety lead','2026-09-27','required',120,'Evidence: certificate'],
+['food-handlers','Complete required handler training for every crew member','Food safety lead','2026-10-05','required',83,'Evidence: certificates'],
+['workers-comp','Bind workers’ compensation and payroll before first employee shift','Finance owner','2026-10-20','required',0,'Evidence: policy/payroll setup'],
+]},
+{id:'facility',name:'3 · Commissary and health permit package',tasks:[
+['commissary-quote','Quote storage, prep, dishwashing, receiving and access—not hourly rent alone','Operations lead','2026-09-24','proof',0,'Evidence: full written quote'],
+['commissary-agreement','Execute approved commissary agreement and verification form','Operations lead','2026-10-02','required',300,'Evidence: signed agreement'],
+['approved-sources','Create approved-supplier file and invoice-retention procedure','Food safety lead','2026-10-02','required',0,'Evidence: supplier list + sample invoices'],
+['process-plan','Document food flow: receive → prep → cool/hold → transport → service → discard','Food safety lead','2026-10-03','required',0,'Evidence: one-page process map'],
+['tff-route','Confirm annual high-hazard TFF route and exact current fee with SFDPH','Food safety lead','2026-10-03','required',412,'Evidence: agency confirmation + receipt'],
+['event-health-file','Build event health file: permit, menu, commissary, certificates and invoices','Food safety lead','2026-10-10','required',0,'Evidence: complete digital folder'],
+]},
+{id:'site',name:'4 · Booth, fire and food-safety hardware',tasks:[
+['site-power','Get written event confirmation for power, propane, cooking placement and footprint','Operations lead','2026-10-05','gate',0,'Evidence: organizer email/site plan'],
+['flame-cert','Obtain flame-resistance certificate for canopy and keep onsite copy','Operations lead','2026-10-08','required',350,'Evidence: certificate'],
+['fire-permit','Submit applicable SFFD permit at least five business days before event','Operations lead','Event − 10 business days','required',436,'Evidence: permit/organizer confirmation'],
+['extinguisher','Obtain tagged 2-A 10-B:C extinguisher for each cook/warm area','Operations lead','2026-10-08','required',100,'Evidence: current service tag'],
+['propane-kit','Verify DOT cylinder, regulator, 350-PSI hose, restraints, shutoffs and leak-test bottle','Operations lead','2026-10-08','required',250,'Evidence: inspection checklist'],
+['handwash','Build and test 100–108°F hands-free handwash station and 5-gallon wastewater capture','Food safety lead','2026-10-08','required',300,'Evidence: photo + temperature test'],
+['temp-control','Validate ≤41°F cold and ≥135°F regulatory hot hold; log each station','Food safety lead','2026-10-10','required',400,'Evidence: four-hour temperature log'],
+['wash-sanitize','Build utensil wash/sanitize setup with test strips and spare utensils','Food safety lead','2026-10-10','required',150,'Evidence: concentration test'],
+['barriers-storage','Verify covers/sneeze barriers and all food at least 6 inches off ground','Food safety lead','2026-10-10','required',150,'Evidence: booth inspection photos'],
+]},
+{id:'operations',name:'5 · Equipment and operational rehearsal',tasks:[
+['rent-list','Reserve/rent plancha, hot hold and carriers before purchasing','Operations lead','2026-10-05','spend',500,'Evidence: reservation/quote'],
+['transport-load','Perform one-person load/unload and vehicle-fit rehearsal','Operations lead','2026-10-10','proof',100,'Evidence: timed load map'],
+['sixty-ticket','Run 60-ticket full booth rehearsal with complete crew','Operator','2026-10-17','gate',750,'Pass: ≥30 tx/hour; median <4 min'],
+['safety-audit','Complete independent pre-opening food/fire checklist audit','Food safety lead','2026-10-18','gate',0,'Evidence: signed audit'],
+['sop','Write open, prep, cook, assemble, close, waste and incident SOPs','Operator','2026-10-20','proof',0,'Evidence: versioned SOP'],
+['par-levels','Set par levels and waste/stockout triggers by headcount','Operator','2026-10-20','proof',0,'Evidence: inventory calculator'],
+]},
+{id:'presold',name:'6 · First paid pre-sold event',tasks:[
+['offer','Finalize $25/person offer with 80-person or $2,000 minimum','Sales owner','2026-10-10','proof',0,'Evidence: approved one-page offer'],
+['contract','Prepare contract: headcount lock, deposit, cancellation, venue, power and service scope','Admin owner','2026-10-15','required',0,'Evidence: reviewed template'],
+['buyer-pipeline','Complete ten qualified host conversations','Sales owner','2026-10-20','proof',0,'Evidence: dated pipeline'],
+['book-pilot','Book one ≥$2,000 paid pilot with deposit','Sales owner','2026-10-24','gate',0,'Evidence: contract + cleared deposit'],
+['event-pack','Complete event-specific permits, COIs, staff list, load plan and production sheet','Operator','Event − 10 business days','required',0,'Evidence: event pack'],
+['run-pilot','Operate the first paid pre-sold event','Operator','2026-11-07','gate',500,'Evidence: POS + labor + temp logs'],
+['close-actuals','Close actual P&L, waste, service time, safety and customer feedback within 48 hours','Finance owner','Event + 2 days','proof',0,'Evidence: reconciled event scorecard'],
+]},
+{id:'public',name:'7 · Public-market release',tasks:[
+['three-paid','Complete three paid operator-run events','Operator','Before public application','gate',0,'Pass: median fully loaded profit ≥$500'],
+['field-counts','Run two 30-minute exact-pitch traffic and food-purchase counts','Research lead','Before public application','proof',100,'Evidence: timestamped count sheets'],
+['category-check','Confirm organizer category availability and no hot-dog exclusivity conflict','Sales owner','Before public application','required',0,'Evidence: organizer confirmation'],
+['organizer-acceptance','Obtain written organizer acceptance before buying public-only equipment','Sales owner','Before equipment purchase','gate',0,'Evidence: acceptance + fee terms'],
+['public-inventory','Set demand, capacity, weather and cancellation inventory plan','Operator','Event − 7 days','proof',0,'Evidence: signed production plan'],
+['public-event','Run one controlled public pilot and reconcile within 48 hours','Operator','First suitable 2027 event','gate',0,'Evidence: complete event scorecard'],
+]},
+{id:'scale',name:'8 · Booth-two gate',tasks:[
+['unit-gate','Verify rolling three-event median profit ≥$500 and contribution/labor-hour ≥$25','Finance owner','After three events','gate',0,'Evidence: reconciled scorecards'],
+['operator-gate','Operator executes without founder shift; food variance within ±2 points','Operations lead','After three events','gate',0,'Evidence: audit'],
+['repeat-demand','Document repeat-host or referral demand and 16 booked booth-days/month before booth three','Sales owner','Before scale','gate',0,'Evidence: signed bookings'],
+['booth-two','Approve booth-two capital only after every preceding scale gate passes','Decision owner','After proof','spend',6500,'Evidence: signed release decision'],
+]}
+];
+const KEY='dogonjohns-startup-v1';let state=JSON.parse(localStorage.getItem(KEY)||'{}');state.tasks=state.tasks||{};state.evidence=state.evidence||{};
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function save(){state.saved=new Date().toISOString();localStorage.setItem(KEY,JSON.stringify(state));document.getElementById('saved').textContent=new Date(state.saved).toLocaleString();updateScore()}
+function setDone(id,v){state.tasks[id]=state.tasks[id]||{};state.tasks[id].done=v;state.tasks[id].blocked=false;save();render()}
+function setBlocked(id){state.tasks[id]=state.tasks[id]||{};state.tasks[id].blocked=!state.tasks[id].blocked;if(state.tasks[id].blocked)state.tasks[id].done=false;save();render()}
+function setEvidence(id,v){state.evidence[id]=v;save()}
+function tagName(t){return {required:'Required',proof:'Proof',spend:'Spend',gate:'Release gate'}[t]||t}
+function render(){let q=document.getElementById('search').value.toLowerCase(),pf=document.getElementById('phaseFilter').value,sf=document.getElementById('stateFilter').value,out='';for(const p of phases){if(pf!='all'&&pf!=p.id)continue;let tasks=p.tasks.filter(t=>{let st=state.tasks[t[0]]||{};return(!q||(t.join(' ').toLowerCase().includes(q)))&&(sf=='all'||sf=='done'&&st.done||sf=='blocked'&&st.blocked||sf=='open'&&!st.done&&!st.blocked)});if(!tasks.length)continue;let done=tasks.filter(t=>(state.tasks[t[0]]||{}).done).length;out+=`<section class="phase"><div class="phasehead"><h2>${esc(p.name)}</h2><span class="phasecount">${done} of ${tasks.length} visible complete</span></div>`;for(const t of tasks){let [id,name,owner,due,type,cost,proof]=t,st=state.tasks[id]||{};out+=`<article class="task ${st.done?'done':''} ${st.blocked?'blocked':''}"><input class="check" type="checkbox" ${st.done?'checked':''} aria-label="Complete ${esc(name)}" onchange="setDone('${id}',this.checked)"><div><div class="taskname">${esc(name)}</div><div class="why"><span class="tag ${type}">${tagName(type)}</span> · ${esc(proof)}${st.blocked?' · <b>BLOCKED</b>':''}</div><button class="btn" style="margin-top:7px;min-height:34px;padding:5px 8px" onclick="setBlocked('${id}')">${st.blocked?'Unblock':'Mark blocked'}</button></div><div class="meta"><b>Owner</b>${esc(owner)}</div><div class="meta"><b>Target</b>${esc(due)}${cost?`<br><b style="margin-top:7px">Budget</b>$${cost.toLocaleString()}`:''}</div><div class="evidence"><div class="meta"><b>Evidence / reference</b></div><input value="${esc(state.evidence[id]||'')}" placeholder="Paste receipt, permit ID, file link or note" onchange="setEvidence('${id}',this.value)"></div></article>`}out+='</section>'}document.getElementById('phases').innerHTML=out;updateScore()}
+function updateScore(){let all=phases.flatMap(p=>p.tasks),done=all.filter(t=>(state.tasks[t[0]]||{}).done),blocked=all.filter(t=>(state.tasks[t[0]]||{}).blocked),pct=Math.round(done.length/all.length*100),budget=done.reduce((a,t)=>a+t[5],0);document.getElementById('pct').textContent=pct+'%';document.getElementById('bar').style.width=pct+'%';document.getElementById('complete').textContent=done.length+' / '+all.length;document.getElementById('blocked').textContent=blocked.length;document.getElementById('budget').textContent='$'+budget.toLocaleString()}
+function saveText(){state.decisions=document.getElementById('decisions').value;state.risks=document.getElementById('risks').value;save()}
+function exportData(){let b=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='dogonjohns-progress-'+new Date().toISOString().slice(0,10)+'.json';a.click();URL.revokeObjectURL(a.href)}
+function importData(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{state=JSON.parse(r.result);state.tasks=state.tasks||{};state.evidence=state.evidence||{};localStorage.setItem(KEY,JSON.stringify(state));init()}catch(x){alert('That file is not valid DogonJohns progress JSON.')}};r.readAsText(f)}
+function resetAll(){if(confirm('Clear every checkbox, evidence field, decision and risk saved in this browser?')){localStorage.removeItem(KEY);state={tasks:{},evidence:{}};init()}}
+function init(){let pf=document.getElementById('phaseFilter');if(pf.options.length==1)for(const p of phases)pf.add(new Option(p.name,p.id));document.getElementById('decisions').value=state.decisions||'';document.getElementById('risks').value=state.risks||'';document.getElementById('saved').textContent=state.saved?new Date(state.saved).toLocaleString():'never';render()}init();
+</script>
+</body></html>
